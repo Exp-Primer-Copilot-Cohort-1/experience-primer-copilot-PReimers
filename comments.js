@@ -23,3 +23,14 @@ router.get('/:id', getComment, (req, res) => {
 // Create one comment
 router.post('/', async (req, res) => {
     const comment = new Comment({
+        name: req.body.name,
+        comment: req.body.comment
+    });
+
+    try {
+        const newComment = await comment.save();
+        res.status(201).json(newComment);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
